@@ -28,8 +28,9 @@
             queryResults = $.customAPI.get(charQueryURL).content,
             queryJSON = JSON.parse(queryResults);
 
-        // Success condition checking
-        // This probably isn't right.
+        /**
+         * Success check
+         */
         if (queryJSON.Pagination.Results <= 0) {
             $.say("API error: Character not found.");
             return;
@@ -47,7 +48,7 @@
             // Generate Profile URL 
             profileURL = "https://" + region + ".finalfantasyxiv.com/lodestone/character/" + charID;
 
-            $.say(charFirst + " " + charLast + "Lodestone profile: " + profileURL);
+            $.say(charFirst + " " + charLast + " Lodestone profile: " + profileURL);
         }
 
     }
@@ -86,8 +87,8 @@
             return;
             } else {
                 var charFirst = String(args[0]).toLocaleLowerCase(),
-                charLast = String(args[1]).toLocaleLowerCase(),
-                server = String(args[2]).toLocaleLowerCase();
+                    charLast = String(args[1]).toLocaleLowerCase(),
+                    server = String(args[2]).toLocaleLowerCase();
             characterSearch(charFirst, charLast, server);
             }
         }
@@ -107,6 +108,7 @@
      * 7 = Viewer
      */
     $.bind('initReady', function() {
-        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2)
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'charactersearch', 2);
     });
 })();
