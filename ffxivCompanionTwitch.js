@@ -24,9 +24,9 @@
      * @param {*} server 
      */
     function characterSearch(charFirst, charLast, server) {
-        charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server;
-        queryResults = $.customAPI.get(charQueryURL).content;
-        queryJSON = JSON.parse(queryResults);
+        var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
+            queryResults = $.customAPI.get(charQueryURL).content,
+            queryJSON = JSON.parse(queryResults);
 
         // Success condition checking
         // This probably isn't right.
@@ -39,10 +39,10 @@
         } else if (queryJSON.Pagination.Results == 1) {
             // Store character data 
             charID = queryJSON.Results[0].ID;
-            charAvatar = queryJSON.Results[0].Avatar;
-            charRank = queryJSON.Results[0].Rank;
-            charRankIcon = queryJSON.Results[0].RankIcon;
-            charServer = queryJSON.Results[0].Server;
+            var charAvatar = queryJSON.Results[0].Avatar,
+                charRank = queryJSON.Results[0].Rank,
+                charRankIcon = queryJSON.Results[0].RankIcon,
+                charServer = queryJSON.Results[0].Server;
 
             // Generate Profile URL 
             profileURL = "https://" + region + ".finalfantasyxiv.com/lodestone/character/" + charID;
@@ -71,10 +71,25 @@
         if (command.equalsIgnoreCase('xivregion')) {
             if (args.length < 1) {$.say("Region currently set to " + region); 
             return;
+            } else {
+                region = String(args[0].toLowerCase());
+                $.setIniDbString('regions', 'currentRegion', region);
+                $.say("Region successfully changed to " + region);
             }
-            region = String(args[0].toLowerCase());
-            $.setIniDbString('regions', 'currentRegion', region);
-            $.say("Region successfully changed to " + region);
+        }
+
+        /**
+         * Character search function
+         */
+        if (command.equalsIgnoreCase('charactersearch')) {
+            if (args.length !== 3) {$.say("Please provide a first name, last name, and server.");
+            return;
+            } else {
+                var charFirst = String(args[0]).toLocaleLowerCase(),
+                charLast = String(args[1]).toLocaleLowerCase(),
+                server = String(args[2]).toLocaleLowerCase();
+            characterSearch(charFirst, charLast, server);
+            }
         }
     })
 
