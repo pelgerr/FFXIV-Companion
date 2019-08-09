@@ -6,51 +6,63 @@
  * 
  */
 
- (function() {
+(function() {
     
     /**
-     * Global variables
+     * Global variable definition
      */ 
     var apiURI = "https://xivapi.com/",
         lodeURI = "https://na.finalfantasyxiv.com/lodestone/",
         charID = '',
         profileURL = '',
-        region = $.getIniDbString('regions', 'currentRegion', 'unset');
+        region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
+
+    /**
+     * Changes the active region. Performs a check to verify
+     * the given region is valid. 
+     * @function regionSwitch
+     * @param {region code} region
+     */
+    function regionSwitch(args) {
+        var regionArr = ["NA", "EU", "JP"];
+        // Using .indexOf() we can check if the argument exists within the array
+        if (regionArr.indexOf(String(args[0].toUpperCase())) !== -1) {
+            region = String(args[0].toUpperCase());
+            $.setIniDbString('regionTable', 'currentRegion', region);
+            $.say("Region successfully changed to " + region);
+        } else {
+            $.say("Invalid region. Please use NA, EU, or JP.")
+        }
+    }
 
     /**
      * Query the API for character data based on name and server
-     * @param {*} charFirst 
-     * @param {*} charLast 
-     * @param {*} server 
+     * @function characterSearch
+     * @param {first name} charFirst 
+     * @param {last name} charLast 
+     * @param {server name} server 
      */
     function characterSearch(charFirst, charLast, server) {
         var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
-            queryResults = $.customAPI.get(charQueryURL).content,
-            queryJSON = JSON.parse(queryResults);
-
-        /**
-         * Success check
-         */
-        if (queryJSON.Pagination.Results <= 0) {
-            $.say("API error: Character not found.");
+            resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
+        // Success check
+        if (resultsJSON.Pagination.Results <= 0) {
+            $.say("API return error: Character not found.");
             return;
-        } else if (queryJSON.Pagination.Results > 1) {
+        } else if (resultsJSON.Pagination.Results > 1) {
             $say("Multiple matches found. Did you include first and last name as well as server?");
             return;
-        } else if (queryJSON.Pagination.Results == 1) {
-            // Store character data 
-            charID = queryJSON.Results[0].ID;
-            var charAvatar = queryJSON.Results[0].Avatar,
-                charRank = queryJSON.Results[0].Rank,
-                charRankIcon = queryJSON.Results[0].RankIcon,
-                charServer = queryJSON.Results[0].Server;
-
+        } else if (resultsJSON.Pagination.Results == 1) {
+            // Store character summary data in variables
+            charID = resultsJSON.Results[0].ID;
+            //var charAvatar = resultsJSON.Results[0].Avatar,
+            //    charRank = resultsJSON.Results[0].Rank,
+            //    charRankIcon = resultsJSON.Results[0].RankIcon,
+            //    charServer = resultsJSON.Results[0].Server;
             // Generate Profile URL 
-            profileURL = "https://" + region + ".finalfantasyxiv.com/lodestone/character/" + charID;
-
+            profileURL = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/character/" + charID;
             $.say(charFirst + " " + charLast + " Lodestone profile: " + profileURL);
         }
-
     }
 
     /**
@@ -65,30 +77,26 @@
             argument = String(event.getArguments());
         
         /**
-         * Region switching
-         * 
-         * TODO: Limit regions to NA, EU, and JP
+         * Region command
          */
         if (command.equalsIgnoreCase('xivregion')) {
             if (args.length < 1) {$.say("Region currently set to " + region); 
             return;
             } else {
-                region = String(args[0].toLowerCase());
-                $.setIniDbString('regions', 'currentRegion', region);
-                $.say("Region successfully changed to " + region);
+                regionSwitch(args);
             }
         }
 
         /**
-         * Character search function
+         * Character commands
          */
-        if (command.equalsIgnoreCase('charactersearch')) {
+        if (command.equalsIgnoreCase('findchar')) {
             if (args.length !== 3) {$.say("Please provide a first name, last name, and server.");
             return;
             } else {
-                var charFirst = String(args[0]).toLocaleLowerCase(),
-                    charLast = String(args[1]).toLocaleLowerCase(),
-                    server = String(args[2]).toLocaleLowerCase();
+                var charFirst = String(args[0]).toLowerCase(),
+                    charLast = String(args[1]).toLowerCase(),
+                    server = String(args[2]).toLowerCase();
             characterSearch(charFirst, charLast, server);
             }
         }
@@ -108,7 +116,7 @@
      * 7 = Viewer
      */
     $.bind('initReady', function() {
-        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2);
-        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'charactersearch', 2);
+        $.registerChatCommand('./custom/TESTffxivCompanionTwitch.js', 'xivregion', 2);
+        $.registerChatCommand('./custom/TESTffxivCompanionTwitch.js', 'findchar', 2);
     });
 })();
