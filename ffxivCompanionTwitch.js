@@ -116,7 +116,7 @@
      * 7 = Viewer
      */
     $.bind('initReady', function() {
-        $.registerChatCommand('./custom/TESTffxivCompanionTwitch.js', 'xivregion', 2);
-        $.registerChatCommand('./custom/TESTffxivCompanionTwitch.js', 'findchar', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'findchar', 2);
     });
 })();
