@@ -49,10 +49,10 @@
             resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
         // Success check
         if (resultsJSON.Pagination.Results <= 0) {
-            $.say("API return error: Character not found.");
+            $.say($.lang.get('ffxivtwitch.charactersearch.notfound'));
             return;
         } else if (resultsJSON.Pagination.Results > 1) {
-            $say("Multiple matches found. Did you include first and last name as well as server?");
+            $say($.lang.get('ffxivtwitch.charactersearch.multiple'));
             return;
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
@@ -93,7 +93,7 @@
          * Character commands
          */
         if (command.equalsIgnoreCase('findchar')) {
-            if (args.length !== 3) {$.say("Please provide a first name, last name, and server.");
+            if (args.length !== 3) {$.say($.lang.get('ffxivtwitch.charactersearch.usage'));
             return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
