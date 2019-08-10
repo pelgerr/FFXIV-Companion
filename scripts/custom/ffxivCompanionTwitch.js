@@ -29,10 +29,8 @@
         if (regionArr.indexOf(String(args[0].toUpperCase())) !== -1) {
             region = String(args[0].toUpperCase());
             $.setIniDbString('regionTable', 'currentRegion', region);
-            //$.say("Region successfully changed to " + region);
             $.say($.lang.get('ffxivtwitch.region.success', region));
         } else {
-            //$.say("Invalid region. Please use NA, EU, or JP.")
             $.say($.lang.get('ffxivtwitch.region.invalid'));
         }
     }
