@@ -29,9 +29,9 @@
         if (regionArr.indexOf(String(args[0].toUpperCase())) !== -1) {
             region = String(args[0].toUpperCase());
             $.setIniDbString('regionTable', 'currentRegion', region);
-            $.say("Region successfully changed to " + region);
+            $.say($.lang.get('ffxivtwitch.region.success', region));
         } else {
-            $.say("Invalid region. Please use NA, EU, or JP.")
+            $.say($.lang.get('ffxivtwitch.region.invalid'));
         }
     }
 
@@ -47,10 +47,10 @@
             resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
         // Success check
         if (resultsJSON.Pagination.Results <= 0) {
-            $.say("API return error: Character not found.");
+            $.say($.lang.get('ffxivtwitch.charactersearch.notfound'));
             return;
         } else if (resultsJSON.Pagination.Results > 1) {
-            $say("Multiple matches found. Did you include first and last name as well as server?");
+            $say($.lang.get('ffxivtwitch.charactersearch.multiple'));
             return;
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
@@ -80,7 +80,7 @@
          * Region command
          */
         if (command.equalsIgnoreCase('xivregion')) {
-            if (args.length < 1) {$.say("Region currently set to " + region); 
+            if (args.length < 1) {$.say($.lang.get('ffxivtwitch.region.current', region)); 
             return;
             } else {
                 regionSwitch(args);
@@ -91,7 +91,7 @@
          * Character commands
          */
         if (command.equalsIgnoreCase('findchar')) {
-            if (args.length !== 3) {$.say("Please provide a first name, last name, and server.");
+            if (args.length !== 3) {$.say($.lang.get('ffxivtwitch.charactersearch.usage'));
             return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
