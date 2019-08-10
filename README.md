@@ -14,6 +14,8 @@
 
 ***Changing Regions***  
 `!xivregion {NA | EU | JP}` - Changes the region the bot uses to perform server-specific searches and Lodestone URL generation. Valid regions are NA, EU, and JP. Using `!xivregion` alone will display the current region.  
+
+***Searching for Characters***  
 `!findchar {first} {last} {server}` - Performs a search for the specified character and returns a Lodestone profile URL if successful. Requires the character's first name, last name and server name.
 
 ---
