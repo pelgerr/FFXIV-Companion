@@ -1,20 +1,19 @@
 # FFXIV Companion - PhantomBot Custom Module  
 
-*A Twitch and Discord companion module for use with Phantombot*  
+*A Twitch and Discord companion module for use with PhantomBot*  
 
 ---
 
 ### Installation
 
-1. Download this repository and unzip. Copy and paste the *scripts/* folder into your Phantombot directory.  
+1. Download this repository and unzip. Copy and paste the *scripts/* folder into your PhantomBot directory.  
 *Note: You should not be prompted to replace anything. If you are, place the files in their respective directories, individually.*
-2. Start Phantombot and enable the module.
+2. Start PhantomBot and enable the module.
 
 ### Usage
 
 ***Changing Regions***  
-`!xivregion {NA | EU | JP}` - Changes the region the bot uses to perform server-specific searches and Lodestone URL generation. Valid regions are NA, EU, and JP.  
-Using `!xivregion` alone will display the current region.  
+`!xivregion {NA | EU | JP}` - Changes the region the bot uses to perform server-specific searches and Lodestone URL generation. Valid regions are NA, EU, and JP. Using `!xivregion` alone will display the current region.  
 `!findchar {first} {last} {server}` - Performs a search for the specified character and returns a Lodestone profile URL if successful. Requires the character's first name, last name and server name.
 
 ---
