@@ -55,13 +55,14 @@
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
             charID = resultsJSON.Results[0].ID;
+            var charName = resultsJSON.Results[0].Name;
             //var charAvatar = resultsJSON.Results[0].Avatar,
             //    charRank = resultsJSON.Results[0].Rank,
             //    charRankIcon = resultsJSON.Results[0].RankIcon,
             //    charServer = resultsJSON.Results[0].Server;
             // Generate Profile URL 
             profileURL = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/character/" + charID;
-            $.say(charFirst + " " + charLast + " Lodestone profile: " + profileURL);
+            $.say($.lang.get('ffxivtwitch.charactersearch.found', charName, profileURL));
         }
     }
 
