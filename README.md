@@ -1,4 +1,4 @@
-# FFXIV Companion - Phantombot Custom Module  
+# FFXIV Companion - PhantomBot Custom Module  
 
 *A Twitch and Discord companion module for use with Phantombot*  
 
