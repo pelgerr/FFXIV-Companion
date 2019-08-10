@@ -20,8 +20,8 @@
 
 There is much more on the way. The ultimate goal of this project is to create a comprehensive solution to the majority of FF XIV needs in both Twitch chat and Discord servers.
 
-*Have a feature you would like to request or did you come across a bug?*  
-Please head over to [project issues](https://github.com/onigiri070/FFXIV-Companion/issues) and submit a feature request or bug report.
+*Have a feature you would like to request or a bug to report?*  
+Please head over to [Project Issues](https://github.com/onigiri070/FFXIV-Companion/issues) and submit a feature request or bug report.
 
 ---
 
