@@ -21,7 +21,6 @@
         profileURL = '',
         region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
         
-
     /**
      * regionSwitch 
      * Changes the active region. Performs a check to verify the given region is valid. 

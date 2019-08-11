@@ -18,6 +18,9 @@
 ***Searching for Characters***  
 `!findchar {first} {last} {server}` - Performs a search for the specified character and returns a Lodestone profile URL if successful. Requires the character's first name, last name and server name.
 
+***Registering Characters***  
+`!xivregister` - Registers characters with the bot. Registered characters will have their full name and Lodestone profile URL stored in PhantomBot's local database. This allows for the character data to be retrieved quickly and frequently without having to query the API.
+
 ---
 
 There is much more on the way. The ultimate goal of this project is to create a comprehensive solution to the majority of FF XIV needs in both Twitch chat and Discord servers.
