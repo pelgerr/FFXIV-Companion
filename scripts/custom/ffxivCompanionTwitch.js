@@ -12,7 +12,7 @@
     
     // Global variable definition
     var apiURI = "https://xivapi.com/",
-        lodeURI = "https://na.finalfantasyxiv.com/lodestone/",
+        lodeURI = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/",
         charID = '',
         charURL = '',
         charName = '',
@@ -54,7 +54,8 @@
             //    charRankIcon = resultsJSON.Results[0].RankIcon,
             //    charServer = resultsJSON.Results[0].Server;
             // Generate Profile URL 
-            charURL = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/character/" + charID;
+            //charURL = "https://" + region.toLowerCase() + lodeURI + "character/" + charID;
+            charURL = lodeURI + 'character/' + charID;
         }
     }
 
