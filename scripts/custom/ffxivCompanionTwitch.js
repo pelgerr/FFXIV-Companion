@@ -4,6 +4,8 @@
  * This module will act as a smart companion providing useful information
  * related to Final Fantasy XIV using the XIVAPI (https://xivapi.com/)
  * 
+ * Original author: Onigiri070 (rpgPilgrim)
+ * 
  */
 
 (function() {
@@ -14,14 +16,15 @@
     var apiURI = "https://xivapi.com/",
         lodeURI = "https://na.finalfantasyxiv.com/lodestone/",
         charID = '',
+        charURL = '',
+        charName = '',
         profileURL = '',
         region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
+        
 
     /**
-     * Changes the active region. Performs a check to verify
-     * the given region is valid. 
-     * @function regionSwitch
-     * @param {region code} region
+     * regionSwitch 
+     * Changes the active region. Performs a check to verify the given region is valid. 
      */
     function regionSwitch(args) {
         var regionArr = ["NA", "EU", "JP"];
@@ -36,11 +39,8 @@
     }
 
     /**
-     * Query the API for character data based on name and server
-     * @function characterSearch
-     * @param {first name} charFirst 
-     * @param {last name} charLast 
-     * @param {server name} server 
+     * characterSearch
+     * Query the API for character data based on name and server 
      */
     function characterSearch(charFirst, charLast, server) {
         var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
@@ -55,15 +55,23 @@
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
             charID = resultsJSON.Results[0].ID;
-            var charName = resultsJSON.Results[0].Name;
+            charName = resultsJSON.Results[0].Name;
             //var charAvatar = resultsJSON.Results[0].Avatar,
             //    charRank = resultsJSON.Results[0].Rank,
             //    charRankIcon = resultsJSON.Results[0].RankIcon,
             //    charServer = resultsJSON.Results[0].Server;
             // Generate Profile URL 
-            profileURL = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/character/" + charID;
-            $.say($.lang.get('ffxivtwitch.charactersearch.found', charName, profileURL));
+            charURL = "https://" + region.toLowerCase() + ".finalfantasyxiv.com/lodestone/character/" + charID;
         }
+    }
+
+    /**
+     * characterRegister
+     * Sets persistent data for registered characters
+     */
+    function characterRegister(charFirst, charURL) {
+        $.setIniDbString('characterTable', charFirst, charURL);
+        $.setIniDbString('characterNameTable', charFirst, charName);
     }
 
     /**
@@ -78,30 +86,63 @@
             argument = String(event.getArguments());
         
         /**
-         * Region command
+         * !xivregion command
          */
         if (command.equalsIgnoreCase('xivregion')) {
-            if (args.length < 1) {$.say($.lang.get('ffxivtwitch.region.current', region)); 
-            return;
+            if (args.length < 1) {
+                $.say($.lang.get('ffxivtwitch.region.current', region)); 
+                return;
             } else {
                 regionSwitch(args);
             }
         }
 
         /**
-         * Character commands
+         * !findchar command
          */
         if (command.equalsIgnoreCase('findchar')) {
-            if (args.length !== 3) {$.say($.lang.get('ffxivtwitch.charactersearch.usage'));
-            return;
+            if (args.length !== 3) {
+                $.say($.lang.get('ffxivtwitch.charactersearch.usage'));
+                return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
                     charLast = String(args[1]).toLowerCase(),
                     server = String(args[2]).toLowerCase();
-            characterSearch(charFirst, charLast, server);
+                characterSearch(charFirst, charLast, server);
+                $.say($.lang.get('ffxivtwitch.charactersearch.found', charName, charURL));
             }
         }
-    })
+
+        /**
+         * !xivregister command
+         */
+        if (command.equalsIgnoreCase('xivregister')) {
+            if (args.length !== 3) {
+                $.say($.lang.get('ffxivtwitch.characterregister.usage'));
+                return;
+            } else {
+                var charFirst = String(args[0]).toLowerCase(),
+                    charLast = String(args[1]).toLowerCase(),
+                    server = String(args[2]).toLowerCase();
+                characterSearch(charFirst, charLast, server);
+                characterRegister(charFirst, charURL);
+                $.say($.lang.get('ffxivtwitch.characterregister.success', charName, charFirst));
+            }
+        }
+
+        /**
+         * !profile command
+         */
+        if (command.equalsIgnoreCase('profile')) {
+            if (args.length !== 1) {
+                $.say($.lang.get('ffxivtwitch.profile.usage'));
+            } else {
+                profileURL = $.getIniDbString('characterTable', args[0]);
+                charName = $.getIniDbString('characterNameTable', args[0]);
+                $.say($.lang.get('ffxivtwitch.profile.success', charName, profileURL));
+            }
+        }
+    });
 
     /**
      * Permission group ID according to IllusionaryOne:
@@ -118,6 +159,8 @@
      */
     $.bind('initReady', function() {
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2);
-        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'findchar', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregister', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'findchar', 7);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'profile', 7);
     });
 })();
