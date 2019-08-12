@@ -10,7 +10,7 @@
  * Region strings
  */
 $.lang.register('ffxivtwitch.region.success', 'Region successfully changed to $1');
-$.lang.register('ffxivtwitch.region.invalid', 'Invalid region. Please use NA, EU, or P.');
+$.lang.register('ffxivtwitch.region.invalid', 'Invalid region. Please use NA, EU, or JP.');
 $.lang.register('ffxivtwitch.region.current', 'Region currently set to $1');
 /**
  * Character search strings

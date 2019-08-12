@@ -10,21 +10,16 @@
 
 (function() {
     
-    /**
-     * Global variable definition
-     */ 
+    // Global variable definition
     var apiURI = "https://xivapi.com/",
-        lodeURI = "https://na.finalfantasyxiv.com/lodestone/",
         charID = '',
         charURL = '',
         charName = '',
         profileURL = '',
         region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
         
-    /**
-     * regionSwitch 
-     * Changes the active region. Performs a check to verify the given region is valid. 
-     */
+    // regionSwitch 
+    // Changes the active region. Performs a check to verify the given region is valid. 
     function regionSwitch(args) {
         var regionArr = ["NA", "EU", "JP"];
         // Using .indexOf() we can check if the argument exists within the array
@@ -36,11 +31,9 @@
             $.say($.lang.get('ffxivtwitch.region.invalid'));
         }
     }
-
-    /**
-     * characterSearch
-     * Query the API for character data based on name and server 
-     */
+    
+    // characterSearch
+    // Query the API for character data based on name and server 
     function characterSearch(charFirst, charLast, server) {
         var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
             resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
@@ -64,29 +57,21 @@
         }
     }
 
-    /**
-     * characterRegister
-     * Sets persistent data for registered characters
-     */
+    // characterRegister
+    // Sets persistent data for registered characters
     function characterRegister(charFirst, charURL) {
         $.setIniDbString('characterTable', charFirst, charURL);
         $.setIniDbString('characterNameTable', charFirst, charName);
     }
-
-    /**
-     * 
-     * Event handling
-     * 
-     */
+    
+    // Event handling        
     $.bind('command', function(event) {
     	var command = event.getCommand(),
             sender = event.getSender(),
             args = event.getArgs(),
             argument = String(event.getArguments());
         
-        /**
-         * !xivregion command
-         */
+        // !xivregion command
         if (command.equalsIgnoreCase('xivregion')) {
             if (args.length < 1) {
                 $.say($.lang.get('ffxivtwitch.region.current', region)); 
@@ -96,9 +81,7 @@
             }
         }
 
-        /**
-         * !findchar command
-         */
+        // !findchar command        
         if (command.equalsIgnoreCase('findchar')) {
             if (args.length !== 3) {
                 $.say($.lang.get('ffxivtwitch.charactersearch.usage'));
@@ -112,9 +95,7 @@
             }
         }
 
-        /**
-         * !xivregister command
-         */
+        // !xivregister command        
         if (command.equalsIgnoreCase('xivregister')) {
             if (args.length !== 3) {
                 $.say($.lang.get('ffxivtwitch.characterregister.usage'));
@@ -129,9 +110,7 @@
             }
         }
 
-        /**
-         * !profile command
-         */
+        // !profile command
         if (command.equalsIgnoreCase('profile')) {
             if (args.length !== 1) {
                 $.say($.lang.get('ffxivtwitch.profile.usage'));
