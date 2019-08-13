@@ -16,6 +16,7 @@
         charURL = '',
         charName = '',
         profileURL = '',
+        active = $.getIniDbString('activeTable', 'current', 'unset'),
         region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
         
     // regionSwitch 
@@ -31,18 +32,27 @@
             $.say($.lang.get('ffxivtwitch.region.invalid'));
         }
     }
+
+    // activeChar
+    // Sets active character in database
+    function activeChar(argStr) {
+        active = argStr;
+        var server = argStr[2];
+        $.setIniDbString('activeTable', 'current', active);
+        $.say($.lang.get('ffxivtwitch.active.success', active, server));
+    }
     
-    // characterSearch
+    // charSearch
     // Query the API for character data based on name and server 
-    function characterSearch(charFirst, charLast, server) {
+    function charSearch(charFirst, charLast, server) {
         var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
             resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
         // Success check
         if (resultsJSON.Pagination.Results <= 0) {
-            $.say($.lang.get('ffxivtwitch.charactersearch.notfound'));
+            $.say($.lang.get('ffxivtwitch.charsearch.notfound'));
             return;
         } else if (resultsJSON.Pagination.Results > 1) {
-            $say($.lang.get('ffxivtwitch.charactersearch.multiple'));
+            $say($.lang.get('ffxivtwitch.charsearch.multiple'));
             return;
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
@@ -57,9 +67,9 @@
         }
     }
 
-    // characterRegister
+    // charReg
     // Sets persistent data for registered characters
-    function characterRegister(charFirst, charURL) {
+    function charReg(charFirst, charURL) {
         $.setIniDbString('characterTable', charFirst, charURL);
         $.setIniDbString('characterNameTable', charFirst, charName);
     }
@@ -69,7 +79,7 @@
     	var command = event.getCommand(),
             sender = event.getSender(),
             args = event.getArgs(),
-            argument = String(event.getArguments());
+            argStr = String(event.getArguments());
         
         // !xivregion command
         if (command.equalsIgnoreCase('xivregion')) {
@@ -81,38 +91,60 @@
             }
         }
 
+        // !setactive command
+        if (command.equalsIgnoreCase('setactive')) {
+            if (args.length !== 3) {
+                $.say($.lang.get('ffxivtwitch.active.usage'));
+                return;
+            } else {
+                activeChar(argStr);
+            }
+        }
+
+        // !active command
+        if (command.equalsIgnoreCase('active')) {
+            if (args.length > 1) {
+                $.say($.lang.get('ffxivtwitch.active.limit'));
+                return;
+            } else {
+                var activeArr = active.split(' ');
+                $.say($.lang.get('ffxivtwitch.active.current', activeArr[0], activeArr[1], activeArr[2]));
+            }
+        }
+
         // !findchar command        
         if (command.equalsIgnoreCase('findchar')) {
             if (args.length !== 3) {
-                $.say($.lang.get('ffxivtwitch.charactersearch.usage'));
+                $.say($.lang.get('ffxivtwitch.charsearch.usage'));
                 return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
                     charLast = String(args[1]).toLowerCase(),
                     server = String(args[2]).toLowerCase();
-                characterSearch(charFirst, charLast, server);
-                $.say($.lang.get('ffxivtwitch.charactersearch.found', charName, charURL));
+                charSearch(charFirst, charLast, server);
+                $.say($.lang.get('ffxivtwitch.charsearch.found', charName, charURL));
             }
         }
 
         // !xivregister command        
         if (command.equalsIgnoreCase('xivregister')) {
             if (args.length !== 3) {
-                $.say($.lang.get('ffxivtwitch.characterregister.usage'));
+                $.say($.lang.get('ffxivtwitch.charreg.usage'));
                 return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
                     charLast = String(args[1]).toLowerCase(),
                     server = String(args[2]).toLowerCase();
-                characterSearch(charFirst, charLast, server);
-                characterRegister(charFirst, charURL);
-                $.say($.lang.get('ffxivtwitch.characterregister.success', charName, charFirst));
+                charSearch(charFirst, charLast, server);
+                charReg(charFirst, charURL);
+                $.say($.lang.get('ffxivtwitch.charreg.success', charName, charFirst));
             }
         }
 
         // !profile command
         if (command.equalsIgnoreCase('profile')) {
             if (args.length !== 1) {
+                // TODO - Run on active character if no params
                 $.say($.lang.get('ffxivtwitch.profile.usage'));
             } else {
                 profileURL = $.getIniDbString('characterTable', args[0]);
@@ -138,6 +170,8 @@
     $.bind('initReady', function() {
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregion', 2);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregister', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'setactive', 2);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'active', 7);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'findchar', 7);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'profile', 7);
     });
