@@ -19,7 +19,8 @@
 `!findchar {first} {last} {server}` - Performs a search for the specified character and returns a Lodestone profile URL if successful. Requires the character's first name, last name and server name.
 
 ***Registering Characters***  
-`!xivregister` - Registers characters with the bot. Registered characters will have their full name and Lodestone profile URL stored in PhantomBot's local database. This allows for the character data to be retrieved quickly and frequently without having to query the API.  
+`!xivregister` - Registers characters with the bot. Registered characters will have their full name and Lodestone profile URL stored in PhantomBot's local database. This allows for the character data to be retrieved quickly and frequently without having to query the API.
+
 ***Active Character***  
 `!setactive {first} {last} {server}` - Sets the active character. Commands that support optional arguments will use the active character's data if no arguments are used.  
 `!active` - Displays the character currently set as active.
