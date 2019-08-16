@@ -52,7 +52,7 @@
             $.say($.lang.get('ffxivtwitch.charsearch.notfound'));
             return;
         } else if (resultsJSON.Pagination.Results > 1) {
-            $say($.lang.get('ffxivtwitch.charsearch.multiple'));
+            $.say($.lang.get('ffxivtwitch.charsearch.multiple'));
             return;
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
