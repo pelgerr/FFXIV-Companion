@@ -37,7 +37,7 @@ $.lang.register('ffxivdiscord.profile.success', 'Lodestone profile for $1: $2');
  * Active character strings
  */
 $.lang.register('ffxivdiscord.active.usage', 'Usage: !setactive {firstNameOfCharacter} {lastNameOfCharacter} {characterServer}');
- $.lang.register('ffxivdiscord.active.success', 'Active character successfully set to $1 $2 on $3!');
+$.lang.register('ffxivdiscord.active.success', 'Active character successfully set to $1 $2 on $3!');
 $.lang.register('ffxivdiscord.active.error', 'Unable to set active character.');
 $.lang.register('ffxivdiscord.active.limit', 'Please run !active by itself.');
 $.lang.register('ffxivdiscord.active.current', 'Current active character: $1 $2 on $3');
