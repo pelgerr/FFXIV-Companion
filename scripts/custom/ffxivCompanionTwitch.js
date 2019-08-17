@@ -35,11 +35,13 @@
 
     // activeChar
     // Sets active character in database
-    function activeChar(argStr) {
-        active = argStr;
-        var server = argStr[2];
+    function activeChar(args) {
+        var charFirst = String(args[0]),
+            charLast = String(args[1]),
+            server = String(args[2]);
+        active = charFirst + ' ' + charLast + ' ' + server;
         $.setIniDbString('activeTable', 'current', active);
-        $.say($.lang.get('ffxivtwitch.active.success', active, server));
+        $.say($.lang.get('ffxivtwitch.active.success', charFirst, charLast, server));
     }
     
     // charSearch
@@ -97,14 +99,14 @@
                 $.say($.lang.get('ffxivtwitch.active.usage'));
                 return;
             } else {
-                activeChar(argStr);
+                activeChar(args);
             }
         }
 
         // !active command
         if (command.equalsIgnoreCase('active')) {
-            if (args.length > 1) {
-                $.say($.lang.get('ffxivtwitch.active.limit'));
+            if (args.length > 0) {
+                $.discord.say(channel, $.lang.get('ffxivdiscord.active.limit'));
                 return;
             } else {
                 var activeArr = active.split(' ');
