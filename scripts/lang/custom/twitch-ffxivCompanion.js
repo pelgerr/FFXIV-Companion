@@ -37,7 +37,7 @@ $.lang.register('ffxivtwitch.profile.success', 'Lodestone profile for $1: $2');
  * Active character strings
  */
 $.lang.register('ffxivtwitch.active.usage', 'Usage: !setactive {firstNameOfCharacter} {lastNameOfCharacter} {characterServer}');
-$.lang.register('ffxivtwitch.active.success', 'Active character successfully set to $1 on $2!');
+$.lang.register('ffxivtwitch.active.success', 'Active character successfully set to $1 $2 on $3!');
 $.lang.register('ffxivtwitch.active.error', 'Unable to set active character.');
 $.lang.register('ffxivtwitch.active.limit', 'Please run !active by itself.');
 $.lang.register('ffxivtwitch.active.current', 'Current active character: $1 $2 on $3');

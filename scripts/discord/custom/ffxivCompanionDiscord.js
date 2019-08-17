@@ -30,6 +30,17 @@
         }
     }
 
+    // activeChar
+    // Sets active character in database
+    function activeChar(args) {
+        var charFirst = String(args[0]),
+            charLast = String(args[1]),
+            server = String(args[2]);
+        active = charFirst + ' ' + charLast + ' ' + server;
+        $.setIniDbString('activeTable', 'current', active);
+        $.discord.say(channel, $.lang.get('ffxivdiscord.active.success', charFirst, charLast, server));
+    }    
+
     // charSearch
     // Query the API for character data based on name and server 
     function charSearch(charFirst, charLast, server) {
@@ -88,7 +99,7 @@
     $.bind('discordChannelCommand', function(event) {
         channel = event.getDiscordChannel();  
 		var	command = event.getCommand(), 
-            //sender = event.getSender(),   // user who sent the command lower case.
+            //sender = event.getSender(), 
             args = event.getArgs(); 
 
         // !xivregion command
@@ -99,6 +110,27 @@
             } else {
                 regionSwitch(args);
                 return;
+            }
+        }
+
+        // !setactive command
+        if (command.equalsIgnoreCase('setactive')) {
+            if (args.length !== 3) {
+                $.discord.say(channel, $.lang.get('ffxivdiscord.active.usage'));
+                return;
+            } else {
+                activeChar(args);
+            }
+        }
+
+        // !active command
+        if (command.equalsIgnoreCase('active')) {
+            if (args.length > 0) {
+                $.discord.say(channel, $.lang.get('ffxivdiscord.active.limit'));
+                return;
+            } else {
+                var activeArr = active.split(' ');
+                $.discord.say(channel, $.lang.get('ffxivdiscord.active.current', activeArr[0], activeArr[1], activeArr[2]));
             }
         }
 
@@ -134,5 +166,7 @@
         // Register the command with the: module path, command name, and command permission.
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'xivregion', 2);
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'findchar', 2);
+        $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'setactive', 2);
+        $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'active', 2);
     });
 })();
