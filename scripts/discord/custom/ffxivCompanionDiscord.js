@@ -73,7 +73,7 @@
     // Embed functions
     function lodeEmbed (charAvatar, charName, charServer, charURL, charRank) {
         $.discordAPI.sendMessageEmbed(channel, new Packages.sx.blah.discord.util.EmbedBuilder()
-            .withColor(100, 65, 164)
+            .withColor(0, 168, 249)
             .withThumbnail(charAvatar)
             .withTitle($.lang.get('ffxivdiscord.lodestone.embed.title'))
             .withDesc($.lang.get('ffxivdiscord.lodestone.embed.desc', charName, charURL))
