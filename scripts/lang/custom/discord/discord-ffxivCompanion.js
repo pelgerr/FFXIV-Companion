@@ -14,12 +14,15 @@ $.lang.register('ffxivdiscord.region.invalid', 'Invalid region. Please use NA, E
 $.lang.register('ffxivdiscord.region.current', 'Region currently set to $1');
 
 /**
- * Character search strings
+ * Lodestone search strings
  */
-$.lang.register('ffxivdiscord.charsearch.usage', 'Please provide a first name, last name, and server name.');
-$.lang.register('ffxivdiscord.charsearch.notfound', 'API return error: Character not found.');
-$.lang.register('ffxivdiscord.charsearch.multiple', "Multiple matches found. Did you include the character's first name, last name and server?");
-$.lang.register('ffxivdiscord.charsearch.found', 'Lodestone profile for $1: $2');
+$.lang.register('ffxivdiscord.lodestone.usage', 'Please provide a first name, last name, and server name.');
+$.lang.register('ffxivdiscord.lodestone.notfound', 'API return error: Character not found.');
+$.lang.register('ffxivdiscord.lodestone.multiple', "Multiple matches found. Did you include the character's first name, last name and server?");
+$.lang.register('ffxivdiscord.lodestone.found', 'Lodestone profile for $1: $2');
+$.lang.register('ffxivdiscord.lodestone.embed.title', 'Final Fantasy XIV Lodestone');
+$.lang.register('ffxivdiscord.lodestone.embed.desc', 'Lodestone profile for $1: $2');
+$.lang.register('ffxivdiscord.lodestone.embed.footer', 'Final Fantasy XIV');
 
 /**
  * Character registration strings
