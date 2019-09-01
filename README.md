@@ -42,4 +42,4 @@ Please head over to [Project Issues](https://github.com/onigiri070/FFXIV-Compani
 [Twitch.tv](https://twitch.tv/rpgpilgrim)  
 [PhantomBot Community Forum](https://community.phantom.bot/u/unrealcroissant)  
 [rpgPilgrim#3359](https://discordapp.com/) on Discord  
-unrealcroissant @ [irc.speedrunslive.com](http://www.speedrunslive.com/channel/)
+rpgpilgrim @ [irc.speedrunslive.com](http://www.speedrunslive.com/channel/)
