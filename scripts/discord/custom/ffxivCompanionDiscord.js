@@ -34,9 +34,9 @@
         }
     }
 
-    // activeChar
+    // setActiveChar
     // Sets active character in database
-    function activeChar(args) {
+    function setActiveChar(args) {
         var charFirst = String(args[0]),
             charLast = String(args[1]),
             server = String(args[2]);
@@ -44,6 +44,13 @@
         $.setIniDbString('activeTable', 'current', active);
         $.discord.say(channel, $.lang.get('ffxivdiscord.active.success', charFirst, charLast, server));
     }    
+
+    // registerChar
+    // Sets persistent data for registered characters
+    function registerChar(charFirst, charURL) {
+        $.setIniDbString('characterTable', charFirst, charURL);
+        $.setIniDbString('characterNameTable', charFirst, charName);
+    }
 
     // getLodestone
     // Query the API for character data based on name and server 
@@ -110,7 +117,7 @@
                 $.discord.say(channel, $.lang.get('ffxivdiscord.active.usage'));
                 return;
             } else {
-                activeChar(args);
+                setActiveChar(args);
             }
         }
 
@@ -136,7 +143,34 @@
                     server = String(args[2]).toLowerCase();
                 getLodestone(charFirst, charLast, server);
                 lodeEmbed(charAvatar, charName, charServer, charURL);
-                //$.discord.say(channel, $.lang.get('ffxivdiscord.lodestone.found', charName, charURL));
+            }
+        }
+
+        // !xivregister command
+        if (command.equalsIgnoreCase('xivregister')) {
+            if (args.length !== 3) {
+                $.discord.say(channel, $.lang.get('ffxivdiscord.charreg.usage'));
+                return;
+            } else {
+                var charFirst = String(args[0]).toLowerCase(),
+                    charLast = String(args[1]).toLowerCase(),
+                    server = String(args[2]).toLowerCase();
+                getLodestone(charFirst, charLast, server);
+                registerChar(charFirst, charURL);
+                $.discord.say(channel, $.lang.get('ffxivdiscord.charreg.success', charName, charFirst));
+            }
+        }
+
+        // !profile command
+        if (command.equalsIgnoreCase('profile')) {
+            if (args.length !== 1) {
+                // TODO - Run on active character if no params
+                $.discord.say(channel, $.lang.get('ffxivdiscord.profile.usage'));
+            } else {
+                profileURL = $.getIniDbString('characterTable', args[0]);
+                charName = $.getIniDbString('characterNameTable', args[0]);
+                lodeEmbed(charAvatar, charName, charServer, charURL);
+                $.discord.say(channel, $.lang.get('ffxivdiscord.profile.success', charName, profileURL));
             }
         }
     });
@@ -157,8 +191,10 @@
     $.bind('initReady', function() {
         // Register the command with the: module path, command name, and command permission.
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'xivregion', 2);
+        $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'xivregister', 2);
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'lodestone', 2);
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'setactive', 2);
         $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'active', 2);
+        $.discord.registerCommand('./discord/custom/ffxivCompanionDiscord.js', 'profile', 2);
     });
 })();
