@@ -19,9 +19,9 @@
         active = $.getIniDbString('activeTable', 'current', 'unset'),
         region = $.getIniDbString('regionTable', 'currentRegion', 'unset');
         
-    // regionSwitch 
+    // setRegion 
     // Changes the active region. Performs a check to verify the given region is valid. 
-    function regionSwitch(args) {
+    function setRegion(args) {
         var regionArr = ["NA", "EU", "JP"];
         // Using .indexOf() we can check if the argument exists within the array
         if (regionArr.indexOf(String(args[0].toUpperCase())) !== -1) {
@@ -33,9 +33,9 @@
         }
     }
 
-    // activeChar
+    // setActiveChar
     // Sets active character in database
-    function activeChar(args) {
+    function setActiveChar(args) {
         var charFirst = String(args[0]),
             charLast = String(args[1]),
             server = String(args[2]);
@@ -44,17 +44,17 @@
         $.say($.lang.get('ffxivtwitch.active.success', charFirst, charLast, server));
     }
     
-    // charSearch
+    // getLodestone
     // Query the API for character data based on name and server 
-    function charSearch(charFirst, charLast, server) {
+    function getLodestone(charFirst, charLast, server) {
         var charQueryURL = apiURI + "character/search?name=" + charFirst + "+" + charLast + "&server=" + server,
             resultsJSON = JSON.parse($.customAPI.get(charQueryURL).content);
         // Success check
         if (resultsJSON.Pagination.Results <= 0) {
-            $.say($.lang.get('ffxivtwitch.charsearch.notfound'));
+            $.say($.lang.get('ffxivtwitch.lodestone.notfound'));
             return;
         } else if (resultsJSON.Pagination.Results > 1) {
-            $.say($.lang.get('ffxivtwitch.charsearch.multiple'));
+            $.say($.lang.get('ffxivtwitch.lodestone.multiple'));
             return;
         } else if (resultsJSON.Pagination.Results == 1) {
             // Store character summary data in variables
@@ -69,9 +69,9 @@
         }
     }
 
-    // charReg
+    // registerChar
     // Sets persistent data for registered characters
-    function charReg(charFirst, charURL) {
+    function registerChar(charFirst, charURL) {
         $.setIniDbString('characterTable', charFirst, charURL);
         $.setIniDbString('characterNameTable', charFirst, charName);
     }
@@ -89,7 +89,7 @@
                 $.say($.lang.get('ffxivtwitch.region.current', region)); 
                 return;
             } else {
-                regionSwitch(args);
+                setRegion(args);
             }
         }
 
@@ -99,7 +99,7 @@
                 $.say($.lang.get('ffxivtwitch.active.usage'));
                 return;
             } else {
-                activeChar(args);
+                setActiveChar(args);
             }
         }
 
@@ -114,32 +114,32 @@
             }
         }
 
-        // !findchar command        
-        if (command.equalsIgnoreCase('findchar')) {
+        // !lodestone command        
+        if (command.equalsIgnoreCase('lodestone')) {
             if (args.length !== 3) {
-                $.say($.lang.get('ffxivtwitch.charsearch.usage'));
+                $.say($.lang.get('ffxivtwitch.lodestone.usage'));
                 return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
                     charLast = String(args[1]).toLowerCase(),
                     server = String(args[2]).toLowerCase();
-                charSearch(charFirst, charLast, server);
-                $.say($.lang.get('ffxivtwitch.charsearch.found', charName, charURL));
+                getLodestone(charFirst, charLast, server);
+                $.say($.lang.get('ffxivtwitch.lodestone.found', charName, charURL));
             }
         }
 
         // !xivregister command        
         if (command.equalsIgnoreCase('xivregister')) {
             if (args.length !== 3) {
-                $.say($.lang.get('ffxivtwitch.charreg.usage'));
+                $.say($.lang.get('ffxivtwitch.registration.usage'));
                 return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
                     charLast = String(args[1]).toLowerCase(),
                     server = String(args[2]).toLowerCase();
-                charSearch(charFirst, charLast, server);
-                charReg(charFirst, charURL);
-                $.say($.lang.get('ffxivtwitch.charreg.success', charName, charFirst));
+                getLodestone(charFirst, charLast, server);
+                registerChar(charFirst, charURL);
+                $.say($.lang.get('ffxivtwitch.registration.success', charName, charFirst));
             }
         }
 
@@ -174,7 +174,7 @@
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'xivregister', 2);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'setactive', 2);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'active', 7);
-        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'findchar', 7);
+        $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'lodestone', 7);
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'profile', 7);
     });
 })();
