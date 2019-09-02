@@ -14,18 +14,18 @@ $.lang.register('ffxivtwitch.region.invalid', 'Invalid region. Please use NA, EU
 $.lang.register('ffxivtwitch.region.current', 'Region currently set to $1');
 
 /**
- * Character search strings
+ * Lodestone strings
  */
-$.lang.register('ffxivtwitch.charsearch.usage', 'Please provide a first name, last name, and server name.');
-$.lang.register('ffxivtwitch.charsearch.notfound', 'API return error: Character not found.');
-$.lang.register('ffxivtwitch.charsearch.multiple', "Multiple matches found. Did you include the character's first name, last name and server?");
-$.lang.register('ffxivtwitch.charsearch.found', 'Lodestone profile for $1: $2');
+$.lang.register('ffxivtwitch.lodestone.usage', 'Please provide a first name, last name, and server name.');
+$.lang.register('ffxivtwitch.lodestone.notfound', 'API return error: Character not found.');
+$.lang.register('ffxivtwitch.lodestone.multiple', "Multiple matches found. Did you include the character's first name, last name and server?");
+$.lang.register('ffxivtwitch.lodestone.found', 'Lodestone profile for $1: $2');
 
 /**
  * Character registration strings
  */
-$.lang.register('ffxivtwitch.charreg.usage', 'Please provide a first name, last name, and server name.');
-$.lang.register('ffxivtwitch.charreg.success', '$1 successfully registered. Their profle URL can be accessed using: !profile $2');
+$.lang.register('ffxivtwitch.registration.usage', 'Please provide a first name, last name, and server name.');
+$.lang.register('ffxivtwitch.registration.success', '$1 successfully registered. Their profle URL can be accessed using: !profile $2');
 
 /**
  * Profile strings

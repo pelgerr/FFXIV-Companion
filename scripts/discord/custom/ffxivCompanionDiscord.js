@@ -3,7 +3,11 @@
  *
  * This module will act as a smart companion providing useful information
  * related to Final Fantasy XIV using the XIVAPI (https://xivapi.com/)
+ * 
+ * Original author: Onigiri070 (rpgPilgrim)
+ * 
  */
+
 (function() {
 
     // Global variable definition
@@ -149,7 +153,7 @@
         // !xivregister command
         if (command.equalsIgnoreCase('xivregister')) {
             if (args.length !== 3) {
-                $.discord.say(channel, $.lang.get('ffxivdiscord.charreg.usage'));
+                $.discord.say(channel, $.lang.get('ffxivdiscord.registration.usage'));
                 return;
             } else {
                 var charFirst = String(args[0]).toLowerCase(),
@@ -157,7 +161,7 @@
                     server = String(args[2]).toLowerCase();
                 getLodestone(charFirst, charLast, server);
                 registerChar(charFirst, charURL);
-                $.discord.say(channel, $.lang.get('ffxivdiscord.charreg.success', charName, charFirst));
+                $.discord.say(channel, $.lang.get('ffxivdiscord.registration.success', charName, charFirst));
             }
         }
 

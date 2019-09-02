@@ -36,7 +36,7 @@ There is much more on the way. The ultimate goal of this project is to create a 
 As of right now all features are fully functional for both Twitch and Discord. The database is shared between both, so all data is accessible from both platforms.
 
 *Have a feature you would like to request or a bug to report?*  
-Please head over to [Project Issues](https://github.com/onigiri070/FFXIV-Companion/issues) and submit a feature request or bug report.
+Head over to  [Project Issues](https://github.com/onigiri070/FFXIV-Companion/issues) and let me know!
 
 ---
 

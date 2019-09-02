@@ -27,8 +27,8 @@ $.lang.register('ffxivdiscord.lodestone.embed.footer', 'Final Fantasy XIV');
 /**
  * Character registration strings
  */
-$.lang.register('ffxivdiscord.charreg.usage', 'Please provide a first name, last name, and server name.');
-$.lang.register('ffxivdiscord.charreg.success', '$1 successfully registered. Their profle URL can be accessed using: !profile $2');
+$.lang.register('ffxivdiscord.registration.usage', 'Please provide a first name, last name, and server name.');
+$.lang.register('ffxivdiscord.registration.success', '$1 successfully registered. Their profle URL can be accessed using: !profile $2');
 
 /**
  * Profile strings
