@@ -1,5 +1,5 @@
 /**
- * ffxivCompanion.js
+ * ffxivCompanionDiscord.js
  *
  * This module will act as a smart companion providing useful information
  * related to Final Fantasy XIV using the XIVAPI (https://xivapi.com/)
