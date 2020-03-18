@@ -178,3 +178,7 @@
         $.registerChatCommand('./custom/ffxivCompanionTwitch.js', 'profile', 7);
     });
 })();
+/**
+* -- TODO --
+* 1) Move to switch statements so there aren't a billion conditionals everywhere. 
+*/
