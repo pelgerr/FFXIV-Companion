@@ -37,12 +37,3 @@ As of right now all features are fully functional for both Twitch and Discord. T
 
 *Have a feature you would like to request or a bug to report?*  
 Head over to  [Project Issues](https://github.com/onigiri070/FFXIV-Companion/issues) and let me know!
-
----
-
-### Contact  
-[Twitter](https://twitter.com/8bitonigiri)  
-[Twitch.tv](https://twitch.tv/8bitonigiri)  
-[PhantomBot Community Forum](https://community.phantom.bot/u/unrealcroissant)  
-[8bitOnigiri#3359](https://discordapp.com/) on Discord  
-rpgpilgrim @ [irc.speedrunslive.com](http://www.speedrunslive.com/profiles/#!/rpgPilgrim/)
